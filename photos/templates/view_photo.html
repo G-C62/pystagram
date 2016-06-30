@@ -1,0 +1,10 @@
+{%extends 'layout.html'%}
+{% block page_title %}
+  {{photo.user.username}}님의 사진입니다
+{%endblock%}
+
+{% block body%}
+  {{photo.image}}
+  </br>
+  <p>{{photo.description}}</p>
+{% endblock%}

@@ -1,0 +1,11 @@
+{% block body %}
+  {% for photo in photos %}
+  <div class="col-xs-6 col-md-3">
+
+    <a href="{% url 'photos:view_photo' pk=photo.pk %}" class ="thumbnail">
+      <img src="http://localhost:8000{{photo.image.url}}">
+    </a>
+    <p>{{photo.description}}</p>
+  </div>
+  {% endfor%}
+{% endblock%}
