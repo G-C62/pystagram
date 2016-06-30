@@ -11,5 +11,5 @@ class Photo(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
     def get_absolute_url(self):
-        return reverse_lazy('photos:detail',kwargs = {'pk':sef.pk})
+        return reverse_lazy('photos:view_photo',kwargs = {'pk':self.pk})
         return '/photos/{}/'.format(self.pk)

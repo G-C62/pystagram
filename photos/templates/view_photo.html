@@ -4,7 +4,9 @@
 {%endblock%}
 
 {% block body%}
-  {{photo.image}}
+  <img src="http://localhost:8000{{photo.image.url}}">
   </br>
   <p>{{photo.description}}</p>
+  <a href="{% url 'photos:delete_photo' pk=photo.pk %}" class = "btn btn-danger btn-sm" >
+    <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></a>
 {% endblock%}

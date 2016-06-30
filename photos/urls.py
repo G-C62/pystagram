@@ -14,13 +14,13 @@ urlpatterns = [
     login_required(views.PhotoCreate.as_view()),    #decorator를 url 전체에 걸어줌
     name="create_photo"),
 
-#    url(r'^delete_photo/(?P<pk>[0-9]+)$',     #사진삭제
-#    login_required(views.delete_photo),
-#    name="delete_photo"),
+    url(r'^delete_photo/(?P<pk>[0-9]+)$',     #사진삭제
+    login_required(views.delete_photo),
+    name="delete_photo"),
 
-#    url(r'^view_photo/(?P<pk>[0-9]+)/$',      #특정사진 보기
-#    views.view_photo,
-#    name="view_photo"),
+    url(r'^view_photo/(?P<pk>[0-9]+)/$',      #특정사진 보기
+    views.view_photo,
+    name="view_photo"),
 
 #    url(r'^create_comment/(?P<pk>[0-9]+)/$',      #특정사진에 댓글달기
 #    login_required(views.create_comment),

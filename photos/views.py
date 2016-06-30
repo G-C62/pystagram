@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 
 from .models import Photo
@@ -27,3 +28,8 @@ def view_photo(request,pk):
         'photo' : photo
     }
     return render(request,'view_photo.html',ctx)
+
+def delete_photo(request,pk):
+    photo = Photo.objects.get(pk=pk)
+    photo.delete()
+    return redirect(list_photos)
