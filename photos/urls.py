@@ -22,12 +22,12 @@ urlpatterns = [
     views.view_photo,
     name="view_photo"),
 
-#    url(r'^create_comment/(?P<pk>[0-9]+)/$',      #특정사진에 댓글달기
-#    login_required(views.create_comment),
-#    name="create_comment"),
+    url(r'^create_comment/(?P<pk>[0-9]+)/$',      #특정사진에 댓글달기
+    login_required(views.create_comment),
+    name="create_comment"),
 
-#    url(r'^delete_comment/(?P<pk>[0-9]+)/$',      #특정사진에 댓글삭제
-#    login_required(views.delete_comment),
-#    name="delete_comment"),
+    url(r'^delete_comment/(?P<pk>[0-9]+)/$',      #특정사진에 댓글삭제
+    login_required(views.delete_comment),
+    name="delete_comment"),
 
 ]

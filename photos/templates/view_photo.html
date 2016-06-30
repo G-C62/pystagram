@@ -8,5 +8,31 @@
   </br>
   <p>{{photo.description}}</p>
   <a href="{% url 'photos:delete_photo' pk=photo.pk %}" class = "btn btn-danger btn-sm" >
-    <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></a>
+    게시물 삭제 <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></a></br>
+    ---------------------------------------------
+    {% for comment in comments %}
+
+      <p>{{comment.content}}
+        <p align = "right">
+          {{comment.created_at}}
+          <a href="{% url 'photos:delete_comment' pk=comment.pk %}" class = "btn btn-danger btn-sm" hidden = "true">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></a>
+        </p>
+      </p>
+    {% endfor %}
+    </div>
+
+
+    <form method="POST" action="{% url 'photos:create_comment' pk=photo.pk %}">
+        {% csrf_token %}
+        <p>
+        <input type="text" name="content" value="" size ="147"/>
+        <button type="submit" class = "btn btn-warning btn-sm">댓글 달기</button>
+        </p>
+
+        <p>
+
+        </p>
+    </form>
+
 {% endblock%}

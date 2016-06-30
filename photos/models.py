@@ -13,3 +13,12 @@ class Photo(models.Model):
     def get_absolute_url(self):
         return reverse_lazy('photos:view_photo',kwargs = {'pk':self.pk})
         return '/photos/{}/'.format(self.pk)
+
+class Comment(models.Model):
+    photo = models.ForeignKey(Photo)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '{}: {}'.format(self.pk, self.content)
