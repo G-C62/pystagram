@@ -36,8 +36,8 @@ class PhotoTest(TestCase):
             User.objects.create_user(**_user)
 
         self.urls = namedtuple('URL', (
-            'photos:create_photo', 'photos:delete_photo', 'photos:view_photo',
-            'photos:list_photos', 'photos:create_comment', 'photos:delete_comment',
+            'create_photo', 'delete_photo', 'view_photo',
+            'list_photos', 'create_comment', 'delete_comment',
         ))(
             # 게시물 작성하는 URL name 은 'create_photo'
             lambda : reverse('photos:create_photo'),
@@ -64,30 +64,33 @@ class PhotoTest(TestCase):
 
     def _login(self, username, password):
         # 로그인 시도.
-        return self.client.photo(
+
+        return self.client.post(
             settings.LOGIN_URL, {'username': username, 'password': password}
         )
 
     def _add_photo(self, data, follow=True):
         # 게시물 게시 시도.
-        return self.client.photo(
+        return self.client.post(
             self.urls.create_photo(), data=data, follow=follow
         )
 
-    @unittest.skip('이 장식자를 제거하며 하나씩 테스트를 통과하세요')
+
     def test_404(self):
         """없는 페이지에 접근하는 테스트.
         """
         response = self.client.get('/page_not_found/')
         self.assertEqual(response.status_code, 404)
 
-    @unittest.skip('이 장식자를 제거하며 하나씩 테스트를 통과하세요')
+
     def test_create_photo_by_view_on_logout(self):
         """로그아웃 상태에서 뷰 함수를 이용해 게시물을 게시하는 테스트.
         """
+
+
         _form_data = {
-            'title': 'test title',
-            'content': 'test content',
+            'image': 'test image',
+            'description': 'test description',
         }
         # 로그인하지 않은 상태에서 게시물 게시 시도.
         response = self._add_photo(_form_data)
@@ -96,7 +99,7 @@ class PhotoTest(TestCase):
         self.assertEqual(response.resolver_match.func.__name__, 'login')
         self.assertEqual(response.redirect_chain[0][1], 302)
 
-    @unittest.skip('이 장식자를 제거하며 하나씩 테스트를 통과하세요')
+
     def test_create_photo_by_view_on_login(self):
         """로그인 상태에서 뷰 함수를 이용해 게시물을 게시하는 테스트.
         """

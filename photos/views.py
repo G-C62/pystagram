@@ -3,9 +3,11 @@ from django.shortcuts import redirect
 from django.views.generic.edit import CreateView
 from django.core.urlresolvers import reverse
 
+
 from .models import Photo
 from .models import Comment
 
+from .forms import PhotoForm
 def list_photos(request):
     photos = Photo.objects.all().order_by('-created_at')
     ctx = {
@@ -23,6 +25,24 @@ class PhotoCreate(CreateView):
         new_photo.user = self.request.user
         new_photo.save()
         return super(PhotoCreate, self).form_valid(form)
+
+
+'''def create_photo(request):
+    if request.method == "GET":
+        form = PhotoForm()
+        ctx = {
+            'form' : form
+        }
+        return render(request, 'create_photo.html', ctx)
+
+    form = PhotoForm(data = request.POST)
+    if form.is_valid() is True:
+        new_photo = form.save(commit = False)
+        new_photo.user = request.user
+        new_photo.save()
+        url = reverse('photos:view_photo', kwargs={'pk': new_photo.pk})
+        return redirect(url)
+'''
 
 def view_photo(request,pk):
     photo = Photo.objects.get(pk=pk)
@@ -57,3 +77,7 @@ def delete_comment(request,pk):
 
     url = reverse('photos:view_photo', kwargs={'pk': photo_pk})
     return redirect(url)
+
+def my_handler404(request):
+
+    return render(request,'404.html', status=404)

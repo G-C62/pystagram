@@ -8,11 +8,11 @@ app_name = 'photos'
 urlpatterns = [
     url(r'^list/$',     #list
     views.list_photos,
-    name="list_photos"),
+    name='list_photos'),
 
     url(r'^create_photo/$',    #사진생성
     login_required(views.PhotoCreate.as_view()),    #decorator를 url 전체에 걸어줌
-    name="create_photo"),
+    name='create_photo'),
 
     url(r'^delete_photo/(?P<pk>[0-9]+)$',     #사진삭제
     login_required(views.delete_photo),

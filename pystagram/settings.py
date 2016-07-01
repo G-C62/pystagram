@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+a=0c5i*jyb!hy(nq95uqz5p)=kno^$9adiqpov+y!(vj(sfj-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,3 +124,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'uploadfiles')
+LOGIN_URL = '/login/'   #로그인 URL을 강제화함
+LOGOUT_URL ='/logout/'
+LOGIN_REDIRECT_URL = '/photos/list/'
