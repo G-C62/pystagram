@@ -1,10 +1,35 @@
-{% extends 'layout.html'%}
+{% extends 'layout.html' %}
+{% block javascript %}
+<script>
+$(document).ready(function(){
+  $('input[type="file"]').on('change',function(e){
+    var reader = new FileReader();
+
+    reader.onloadend = function(e){
+      $('#preview > img').attr('src', e.target.result).show();
+    }
+    reader.readAsDataURL(this.files[0]);
+  });
+  $('#image_filter_buttons > button').on('click', function(e){
+    var filter = $(this).val();
+    var img = $('#preview > img');
+    img.vintage({},vintagePresets[filter]);
+    return false;
+
+  });
+});
+</script>
+{% endblock %}
 {% block body%}
   <form method ="POST" action ="" enctype="multipart/form-data">
     {%csrf_token%}
 
     {{form.as_p}}
+    <div id="preview"><img src=""/></div>
 
+    <div id = "image_filter_buttons">
+      <button type = "button" value="vintage">vintage</button>
+    </div>
     <button type = "submit">저장</button>
   </form>
 {% endblock %}

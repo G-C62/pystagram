@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '+a=0c5i*jyb!hy(nq95uqz5p)=kno^$9adiqpov+y!(vj(sfj-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -122,6 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static'),]
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'uploadfiles')
 LOGIN_URL = '/login/'   #로그인 URL을 강제화함

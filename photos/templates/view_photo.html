@@ -1,12 +1,27 @@
+
 {%extends 'layout.html'%}
+{% load my_tags %}
 {% block page_title %}
   {{photo.user.username}}님의 사진입니다
 {%endblock%}
 
 {% block body%}
+  {% addnim %}
+  <p>{{request.user}}</p>
+  <hr />
+  <p>{{photo.user}}</p>
+  {% endaddnim%}
+  <p>{% helloworld 'a' 'b' 'c' 'd' name="key" nickname="value" %}</p>
   <img src="http://localhost:8000{{photo.image.url}}">
   </br>
   <p>{{photo.description}}</p>
+  <div>
+    {% if photo|did_like:request.user %}
+    좋아요 취소
+    {% else %}
+    좋아요
+    {% endif %}
+  </div>
   <a href="{% url 'photos:delete_photo' pk=photo.pk %}" class = "btn btn-danger btn-sm" >
     게시물 삭제 <span class="glyphicon glyphicon-trash" aria-hidden="true" ></span></a></br>
     ---------------------------------------------
