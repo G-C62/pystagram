@@ -10,6 +10,7 @@ class Photo(models.Model):
     description = models.TextField(max_length = 500)    #장고에서 제한함 form validation시
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+    tags = models.ManyToManyField('Tag')
 
     def get_absolute_url(self):
         return reverse_lazy('photos:view_photo',kwargs = {'pk':self.pk})
@@ -18,7 +19,15 @@ class Photo(models.Model):
     def __str__(self):
         return '{}: {}'.format(self.pk, self.description)
 
+class Tag(models.Model):
+    name = models.CharField(max_length =200)
+
+class Follow(models.Model):
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    follow_userid = models.PositiveIntegerField()
+
 class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL)
     photo = models.ForeignKey(Photo)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
@@ -32,7 +41,6 @@ class Comment(models.Model):
 class Like(models.Model):
     photo = models.ForeignKey(Photo)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
-    status = models.BooleanField(default = True)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 

@@ -30,4 +30,14 @@ urlpatterns = [
     login_required(views.delete_comment),
     name="delete_comment"),
 
+    url(r'^click_like/(?P<pk>[0-9]+)/(?P<status>[a-z]+)/$',      #좋아요or취소 버튼 클릭
+    login_required(views.click_like),
+    name="click_like"),
+
+    url(r'^user_page/(?P<username>[0-9a-zA-Z]+)/$',      #mypage
+    login_required(views.view_userpage),
+    name="view_userpage"),
+
+
+
 ]

@@ -1,14 +1,48 @@
+{% extends 'layout.html' %}
+{% load my_tags %}
 {% block body %}
-<div class="row">
+
   {% for photo in photos %}
-  <div class="col-xs-6 col-md-3">
+<article class ="thumbnail">
+  <div class="row">
+    <header>
 
-    <a href="{% url 'photos:view_photo' pk=photo.pk %}" class ="thumbnail">
-      <img src="http://localhost:8000{{photo.image.url}}">
-    </a>
-    <p>{{photo.description}}</p>
+
+      <a href="{% url 'photos:view_userpage' username=photo.user %}"><strong>{{photo.user}}</strong></a>
+      <time>{{photo.created_at}}</time>
+
+    </header>
+    <hr />
+
+      <img src="http://localhost:8000{{photo.image.url}}" >
+    <p>좋아요 {{photo|count_like}} 개</p>
+
+    <p><strong>{{photo.user}}</strong> {{photo.description}}</p><!-- tag도 추가-->
+    {% for comment in photo.comment_set.all %}
+
+      <p>
+        <a href="{% url 'photos:view_userpage' username=comment.user %}"><strong>{{comment.user}}</strong></a>
+        {{comment.content}}
+      </p>
+    {% endfor %}
+    </div>
+    <hr />
+    <div>
+      {% if photo|did_like:request.user %}
+      <a href = "{% url 'photos:click_like' pk=photo.pk status='false' %}">좋아요 취소</a>
+      {% else %}
+      <a href ="{% url 'photos:click_like' pk=photo.pk status='true' %}">좋아요<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
+      {% endif %}
+      <form method="POST" action="{% url 'photos:create_comment' pk=photo.pk %}">
+          {% csrf_token %}
+          <p>
+          <input type="text" name="content" value="" size ="147">
+          <button type="submit" class = "btn btn-warning btn-sm">댓글 달기</button>
+        </input>
+          </p>
+      </form>
+    </div>
   </div>
-
+</article>
   {% endfor%}
-</div>
 {% endblock%}

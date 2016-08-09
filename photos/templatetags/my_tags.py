@@ -9,7 +9,11 @@ register = template.Library()
 
 @register.filter(name = 'did_like')     #name생략가능
 def did_like(photo, user):     #최대두개 최소한개의 인자를 받음
-    return photo.like_set.filter(user = user, status = True).exists()
+    return photo.like_set.filter(user = user).exists()
+
+@register.filter(name = 'count_like')
+def count_like(photo):
+    return photo.like_set.all().count()
 
 @register.simple_tag
 def helloworld(*args, **kwargs):

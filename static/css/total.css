@@ -1,0 +1,17 @@
+#brand_icon{
+  padding: 0px;
+}
+#modal-img{
+  float: left;
+  padding:0px;
+}
+#modal-text{
+  padding-top: 20px;
+  float: right;
+}
+.modal-dialog.modal-lg{
+ margin-top: 9%;
+}
+.modal-body{
+  padding:0px;
+}

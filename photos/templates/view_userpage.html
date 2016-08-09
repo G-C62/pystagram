@@ -1,0 +1,82 @@
+{% extends 'layout.html' %}
+{% load my_tags %}
+{% block body %}
+
+<div class="profile">
+  <h3>{{user.username}}</h3>
+  <button> 프로필 수정</button> <!-- 유저와의 관계에 따라 버튼만 변경됨 JavaScript필요 -->
+  <h5>
+    <strong>
+      게시물 {{photos.count}} 개
+      팔로워 00 명
+      팔로우 00 명
+    </strong>
+  </h5>
+</div>
+
+
+<!-- photos -->
+  <div class="row">
+    {% for photo in photos %}
+
+      <div class="col-xs-6 col-md-4">
+        <a href="#" class="thumbnail" data-toggle="modal" data-target="#{{photo.pk}}">
+          <img src="http://localhost:8000{{photo.image.url}}" >
+        </a>
+        <!-- Modal -->
+      <div class="modal fade" id="{{photo.pk}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                <div class="col-md-4" id="modal-img">
+                <img src="http://localhost:8000{{photo.image.url}}" >
+                </div>
+                <div class="col-md-4 col-md-offset-3" id ="modal-text">
+                  <a href="{% url 'photos:view_userpage' username=photo.user %}"><strong>{{photo.user}}</strong></a>
+                <hr />
+
+                <p>좋아요 {{photo|count_like}} 개 <time>{{photo.created_at}}</time></p>
+
+                <p><strong>{{photo.user}}</strong> {{photo.description}}</p><!-- tag도 추가-->
+                {% for comment in photo.comment_set.all %}
+
+                  <p>
+                    <a href="{% url 'photos:view_userpage' username=comment.user %}"><strong>{{comment.user}}</strong></a>
+                    {{comment.content}}
+                  </p>
+                {% endfor %}
+
+                <hr />
+                <div>
+
+                  <form method="POST" action="{% url 'photos:create_comment' pk=photo.pk %}">
+                      {% csrf_token %}
+                      <p>
+                        {% if photo|did_like:request.user %}
+                        <a href = "{% url 'photos:click_like' pk=photo.pk status='false' %}">좋아요 취소</a>
+                        {% else %}
+                        <a href ="{% url 'photos:click_like' pk=photo.pk status='true' %}">좋아요<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></a>
+                        {% endif %}
+                      <input type="text" name="content" value="" size ="20"></input>
+                      <button type="submit" class = "btn btn-warning btn-sm">입력</button>
+
+                      </p>
+                  </form>
+                </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+
+  {% endfor %}
+</div>
+{% endblock%}

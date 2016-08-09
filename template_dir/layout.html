@@ -1,25 +1,73 @@
+{% load bootstrap3 %}
 {% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
   <head>
       <meta charset="euc-kr">
       <title>{% block page_title %}Pystagram{% endblock %}</title> <!--page_title이 없는경우 들어가는 디폴트 출력 문자열이 tumblog -->
-      <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="{% static 'js/dist/jquery.vintage.min.js'%}"></script>
 <script src="{% static 'js/vintage.presets.js'%}"></script>
-{% block javascript%}{% endblock %}
 
+{% bootstrap_css%}
+{% bootstrap_javascript %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/total.css'%}">
+{% block javascript%}{% endblock %}
+    <style>
+      .article_image{
+        align-items: right;
+      }
+    </style>
   </head>
 
   <body class="container">
+    <h3>현재유저 {{request.user}}</h3>
+    {% block header %}
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- 홈 버튼 -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
 
-    {% block header %}{% endblock %}
+          </button>
+          <a class="navbar-brand" id ="brand_icon" href="{% url 'photos:list_photos'  %}">
+            <img alt="Brand" src="{% static 'images/instagram_icon.jpg'%}">
+          </a>
+        </div>
+
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <!-- 검색버튼 -->
+          <form class="navbar-form navbar-left"  role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Search</button>
+          </form>
+          <!-- 사람찾기 버튼 -->
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">find</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">like_info <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">00님이 회원님의 글을 좋아합니다</a></li>
+                <li class="divider"></li>
+                <li><a href="#">00님이 회원님의 글에 댓글을 알았습니다</a></li>
+                <li class="divider"></li>
+                <li><a href="#">%%님이 팔로우 하였습니다</a></li>
+                <li class="divider"></li>
+                <li><a href="#">회원님이 @@님을 팔로우 하였습니다</a></li>
+              </ul>
+            </li>
+            <!-- 로그인 유저페이 버튼 -->
+            <li><a href="{% url 'photos:view_userpage' username=request.user %}">user_page</a></li>
+            <!-- 글생성 버튼 -->
+            <li><a href="{% url 'photos:create_photo'  %}">create_content</a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    {% endblock %}
 
     {% block body %}{% endblock %}
 

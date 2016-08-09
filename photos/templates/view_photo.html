@@ -6,11 +6,7 @@
 {%endblock%}
 
 {% block body%}
-  {% addnim %}
-  <p>{{request.user}}</p>
-  <hr />
   <p>{{photo.user}}</p>
-  {% endaddnim%}
   <p>{% helloworld 'a' 'b' 'c' 'd' name="key" nickname="value" %}</p>
   <img src="http://localhost:8000{{photo.image.url}}">
   </br>
